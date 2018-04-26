@@ -1,11 +1,8 @@
-<html>
-    <head>
-        <title>Class Schedule</title>
-        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.0/css/bootstrap.min.css" integrity="sha384-9gVQ4dYFwwWSjIDZnLEWnxCjeSWFphJiwGPXr1jddIhOegiu1FwO5qRGvFXOdJZ4" crossorigin="anonymous">
+{% extends "base.html" %}
 
-    </head>
-    <body>
-        <div class="table table-striped">
+{% block title %}Class Schedule{% endblock %}
+
+{% block content %}
             <h2>Class Schedule</h2>
             <table class="table">
             <tr>
@@ -14,57 +11,14 @@
             <th>Teacher</th>
             <th>Web Resource</th>
             </tr>
+            {% for course in courses %}
             <tr>
-                <td>1</th>
-                <td>Exploring Computer Science</th>
-                <td>Ms.Lee</th>
-                <td><p><a href = "https://repl.it/">Repl.it</a></td>
+                <td>{{ course.period }}</th>
+                <td>{{course.name}}</th>
+                <td>{{course.teacher_name}}</th>
+                <td><p><a href = "{{ course.resource_url }}">{{ course.resource_name }}</a></td>
                 </p>
             </tr>
-            <tr>
-                <td>2</td>
-                <td>History</td>
-                <td>Mr.Kileen</td>
-                <td><p><a href = "http://www.ushistory.org/us/">US History</a></td>
-                </p>
-            </tr>
-            <tr>
-                <td>3</td>
-                <td>Algebra 2</td>
-                <td>Mr.Shelton</td>
-                <td><p><a href = "https://www.khanacademy.org/math/algebra2">Khan Academy algebra 2</a></td>
-                </p>
-            </tr>
-            <tr>
-                <td>4</td>
-                <td>English</td>
-                <td>Ms.Johnson</td>
-                <td><p><a href = "https://www.coursehero.com/sitemap/schools/42652-Adolfo-Camarillo-High/courses/6058326-ENGLISH3-CP/">English 3 CP</a></td>
-                </p>
-            </tr>
-            <tr>
-                <td>5</td>
-                <td>Biotech</td>
-                <td>Mr.Ng</td>
-                <td><p><a href = "https://www.khanacademy.org/science/biology/biotech-dna-technology">Khan Academy biotech</a></td>
-                </p>
-            </tr>
-            <tr>
-                <td>6</td>
-                <td>AVID</td>
-                <td>Ms.Johnson</td>
-                <td><p><a href = "https://www.avid.org/what-avid-is">AVID</a></td>
-                </p>
-            </tr>
-
-
-
-        </table>
-
-        </div>
-
-
-    </body>
-
-
-</html>
+            {% endfor %}
+         </table>
+{% endblock %}

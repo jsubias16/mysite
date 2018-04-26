@@ -7,13 +7,13 @@ from flask import render_template
 app = Flask(__name__)
 
 @app.route('/')
-def hello_world():
-    return 'Hello from Joel!'
+def homepage():
+    return render_template('index.html')
 
 @app.route('/aboutme')
-@app.route('/about me')
+@app.route('/aboutme')
 def about_me():
-    return app.send_static_file('about me.html')
+    return render_template('aboutme.html')
 
 @app.route('/class_schedule')
 def class_schedule():
@@ -23,4 +23,4 @@ def class_schedule():
 
 @app.route('/register')
 def register():
-    return app.send_static_file('register.html')
+    return render_template('register.html')
