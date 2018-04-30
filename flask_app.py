@@ -1,8 +1,8 @@
 
 # A very simple Flask Hello World app for you to get started with...
-import constants
 from flask import Flask
 from flask import render_template
+import constants
 
 app = Flask(__name__)
 
@@ -10,8 +10,7 @@ app = Flask(__name__)
 def homepage():
     return render_template('index.html')
 
-@app.route('/aboutme')
-@app.route('/aboutme')
+@app.route('/about_me')
 def about_me():
     return render_template('aboutme.html')
 
@@ -24,3 +23,7 @@ def class_schedule():
 @app.route('/register')
 def register():
     return render_template('register.html')
+
+@app.route('/top_ten_songs')
+def top_ten_songs():
+    return render_template('top_ten_songs.html', songs=constants.TOP_TEN_SONGS)

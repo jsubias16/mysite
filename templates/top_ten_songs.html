@@ -1,0 +1,22 @@
+{% extends "base.html" %}
+
+{% block title %}Top ten songs{% endblock %}
+
+{% block content %}
+            <h2>Top ten songs</h2>
+            <table class="table">
+            <tr>
+            <th>Title</th>
+            <th>Artist_name</th>
+            <th>Youtube_url</th>
+            </tr>
+            {% for song in songs %}
+            <tr>
+                <td>{{song.title}}</th>
+                <td>{{song.artist_name}}</th>
+                <td><p><a href = "{{ song.youtube_url }}">Youtube_url</a></td>
+                </p>
+            </tr>
+            {% endfor %}
+         </table>
+{% endblock %}
