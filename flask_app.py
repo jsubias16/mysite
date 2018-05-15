@@ -16,6 +16,7 @@ from werkzeug.security import generate_password_hash
 from flask import redirect
 from flask import url_for
 from wtforms.validators import ValidationError
+from flask import flash
 
 app = Flask(__name__)
 
@@ -27,6 +28,7 @@ nav = Nav(app)
 @nav.navigation('mysite_navbar')
 def create_navbar():
     home_view = View('Home', 'homepage')
+    login_view = View('Login', 'login')
     register_view = View('Register', 'register')
     about_me_view = View('About Me', 'about_me')
     class_schedule_view = View('Class Schedule', 'class_schedule')
@@ -35,7 +37,7 @@ def create_navbar():
                              about_me_view,
                              class_schedule_view,
                              top_ten_songs_view)
-    return Navbar('MySite', home_view, misc_subgroup, register_view)
+    return Navbar('MySite', home_view, misc_subgroup, login_view, register_view)
 
 class Course(db.Model):
     id = db.Column(db.Integer, primary_key=True)
@@ -64,6 +66,11 @@ class RegistrationForm(FlaskForm):
         user = User.query.filter_by(username=username.data).first()
         if user is not None:
             raise ValidationError('Please choose a different username.')
+
+class LoginForm(FlaskForm):
+    username = StringField('Username', validators=[InputRequired()])
+    password = PasswordField('Password', validators=[InputRequired()])
+    submit = SubmitField('Sign in')
 
 class User(db.Model):
     id = db.Column(db.Integer, primary_key=True)
@@ -110,6 +117,17 @@ def top_ten_songs():
     songs = Song.query.all()
     return render_template('top_ten_songs.html',
                            songs=songs)
+
+@app.route('/login', methods=['GET', 'POST'])
+def login():
+    form = LoginForm()
+    if form.validate_on_submit():
+        user = User.query.filter_by(username=form.username.data).first()
+        if not user or not user.check_password(form.password.data):
+            flash('Username or password is incorrect.', 'danger')
+            return render_template('login.html', form=form)
+        return 'Welcome ' + user.username + '!'
+    return render_template('login.html', form=form)
 
 if __name__ == '__main__':
   db.create_all()
